@@ -10,6 +10,7 @@ using System.Web;
 using Eshop.Services;
 using Statistics.Business.Managers;
 using Statistics.Data.Interfaces;
+using Statistics.Utils;
 
 namespace EshopNew.Adapters
 {
@@ -41,15 +42,10 @@ namespace EshopNew.Adapters
                     result = GetInternalResponseData(message, ApiManager.GetTestData);
                     break;
                 default:
-                    result = ErrorResponse(" Unknown method {" + (string)message["method"], 400);                 
+                    result = ResponseHelper.ErrorResponse(" Unknown method {" + (string)message["method"], 400);                 
                     break;
             }
             return result;
-        }
-
-        private static JToken ErrorResponse(string v1, int v2)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
