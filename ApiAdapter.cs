@@ -41,16 +41,15 @@ namespace EshopNew.Adapters
                     result = GetInternalResponseData(message, ApiManager.GetTestData);
                     break;
                 default:
-                    result = new JObject() {
-                        { "error", new JObject() {
-                                { "code", -32601 },
-                                { "message", $"Unknown method {(string)message["method"]}" }
-                            }
-                        }
-                    };
+                    result = ErrorResponse(" Unknown method {" + (string)message["method"], 400);                 
                     break;
             }
             return result;
+        }
+
+        private static JToken ErrorResponse(string v1, int v2)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -90,13 +89,9 @@ namespace EshopNew.Adapters
                 {
                     lock (messagesLock)
                     {
-                        awaitingMessages.Remove(messageGuid); //remove out of awaitingMessages and
-                        messages.Add(messageGuid, new JObject() { //insert into messages error response
-                            { "error", new JObject() {
-                                { "code", -32000 },
-                                { "message", "Request timeout" }
-                            } }
-                        });
+                        awaitingMessages.Remove(messageGuid);
+                        var result = ErrorResponse("Request timeout", 408);
+                        messages.Add(messageGuid, result);
                     }
                     break;
                 }

@@ -45,7 +45,7 @@ namespace Statistics.Controllers
             }
             catch (Exception e)
             {
-                return ResponseHelper.ErrorResponse("Error ", int.Parse(e.GetType().ToString()));
+                return ResponseHelper.ErrorResponse("The server responsed with exception " + int.Parse(e.GetType().Name.ToString()), 500);
             }
             
         }

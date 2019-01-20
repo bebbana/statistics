@@ -19,7 +19,6 @@ namespace Statistics.Data.Repositories
         /// <summary>
         /// BaseRepository constructor
         /// </summary>
-        /// <param name="appDbContext">DI service of application db context</param>
         public BaseRepository()
         {
             dbContext = new ApplicationDbContext();
